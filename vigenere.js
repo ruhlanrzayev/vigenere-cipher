@@ -4,20 +4,31 @@ const letters = {
     t: 20, u: 21, v: 22, w: 23, x: 24, y: 25, z: 26
 };
 
-let word = "yourPassword"; // Any text 
-let key = "vigenere"; // If you want to change key , you can.
+let word = "pass word!"; 
+let key = "key";
 let result = "";
 
-for (let i = 0; i < word.length; i++) {
-    let wordLetter = word[i];
-    let keyLetter = key[i % key.length];
+for (let i = 0, keyIndexCounter = 0; i < word.length; i++) {
+    let wordLetter = word[i].toLowerCase();
+
+    if (wordLetter === " ") {
+        continue;
+    }
+
+    if (!letters[wordLetter]) {
+        result += word[i];
+        continue;
+    }
+
+    let keyLetter = key[keyIndexCounter % key.length].toLowerCase();
 
     let wordIndex = letters[wordLetter];
     let keyIndex = letters[keyLetter];
-    let newIndex = ((wordIndex + keyIndex - 1) % 26) + 1; 
+    let newIndex = ((wordIndex + keyIndex - 1) % 26) + 1;
     let newLetter = Object.keys(letters).find(key => letters[key] === newIndex);
-    
-    result += newLetter; 
+
+    result += newLetter;
+    keyIndexCounter++;
 }
 
 console.log(result);
